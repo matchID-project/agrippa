@@ -1,0 +1,17 @@
+recipes:
+  rnipp_agrippa_rescoring:
+    input: rnipp_agrippa_ml
+    output: 
+      dataset: rnipp_agrippa_ml
+      append: True
+    steps:
+      - apply_model:
+          name: rnipp_agrippa_ml
+          numerical: .*(hit_score_(location|name|date|sex).*|population|matchid_hit_freq)$
+          target: matchid_hit_score_ml
+      - eval:
+          - confiance: 0.7*matchid_hit_score_ml+30*matchid_hit_score
+      - keep:
+          select: .*
+          where: confiance > 10
+ 

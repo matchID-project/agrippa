@@ -1,0 +1,29 @@
+recipes:
+  agrippa_ref_location:
+    steps:
+      - join:
+          type: in_memory
+          dataset: agrippa_cities
+          strict:
+            cmne_id_nais: cmne_id
+          select:
+            matchid_location_citycode_src: cmne_c_insee
+            matchid_location_citycode: cmne_c_insee
+            matchid_location_city_src: cmne_l_nom
+            dept_id: dept_id
+      - join:
+          type: in_memory
+          dataset: agrippa_dep
+          strict:
+            dept_id: dept_id
+          select:
+            matchid_location_depcode_src: dept_c_dept
+      - join :
+          type: in_memory
+          dataset: agrippa_countries
+          strict:
+            pays_id_nais: pays_id
+          select:
+          #  matchid_location_countrycode_src: pays_c_num
+            matchid_location_country_src : pays_l_nom
+

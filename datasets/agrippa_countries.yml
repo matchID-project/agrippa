@@ -1,0 +1,20 @@
+datasets:
+  agrippa_countries:
+    connector: upload
+    table: pays.txt.gz
+    encoding: latin-1
+    type: read_fwf
+    skiprows: 3
+    widths:
+      - 11
+      - 4
+      - 41
+      - 41
+      - 11
+    names:
+      - pays_id
+      - pays_c_num
+      - pays_l_nom
+      - pays_l_natio
+      - pays_d_deb_vali
+      - pays_d_fin_vali

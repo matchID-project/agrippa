@@ -1,0 +1,22 @@
+datasets:
+  agrippa_cities:
+    connector: upload
+    table: cmne.txt.gz
+    encoding: latin-1
+    type: read_fwf
+    skiprows: 3
+    widths:
+      - 11
+      - 11
+      - 6
+      - 6
+      - 41
+      - 11
+    names:
+      - cmne_id
+      - dept_id
+      - cmne_c_insee
+      - cmne_c_copo
+      - cmne_l_nom
+      - cmne_d_deb_vali
+      - cmne_d_fin_vali

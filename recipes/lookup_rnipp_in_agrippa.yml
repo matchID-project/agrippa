@@ -1,0 +1,13 @@
+recipes:
+  #the full monty
+  lookup_rnipp_in_agrippa:
+    input: rnipp_fwf
+    output: rnipp_agrippa_direct
+    steps:
+      - dataprep_rnipp:
+      - rnipp_agrippa_matching:
+      #- train_rnipp_agrippa_rescoring_model: #- optional retrain
+      - rnipp_agrippa_rescoring:
+      - diff:
+      - keep:
+         select: .*(diff.*|confiance|.*score_ml|.*score|matchid_hit_distance)$

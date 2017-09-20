@@ -1,0 +1,42 @@
+datasets:
+  agrippa_src:
+    connector: upload
+    table: cdet.txt.gz
+    encoding: latin-1
+    skiprows: 3
+    type: read_fwf
+    widths:
+      - 11
+      - 31
+      - 12
+      - 13
+      - 13
+      - 14
+      - 11
+      - 11
+      - 5
+      - 101
+      - 101
+      - 101
+      - 11
+      - 101
+      - 15
+      - 11
+    names:
+      - cdet_id
+      - cdet_c_num
+      - cdet_i_supp
+      - cmne_id_nais
+      - pays_id_nais
+      - pays_id_natio
+      - adre_id
+      - tobj_id
+      - pphy_c_civil
+      - pphy_l_nom
+      - pphy_l_pren
+      - pphy_l_nom_jf
+      - pphy_d_nais
+      - pmor_l_nom
+      - pmor_l_siret
+      - site_id
+      - pers_l_obs

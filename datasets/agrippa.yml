@@ -1,0 +1,26 @@
+datasets:
+  #treatment database        
+  agrippa:
+    connector: elasticsearch
+    table: agrippa
+    body: 
+      settings:
+        #index.store.type: mmapfs
+        index.refresh_interval: 30s
+        index.number_of_replicas: 0
+      mappings:
+        agrippa:
+          _all:
+            enabled: False
+          dynamic: False
+          properties:
+            matchid_id:
+              type: keyword
+            matchid_name_match:
+              type: text
+            matchid_date_birth_str:
+              type: keyword
+            matchid_location_city:
+              type: keyword
+            matchid_location_country:
+              type: keyword

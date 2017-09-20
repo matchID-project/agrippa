@@ -1,0 +1,41 @@
+recipes:  
+  train_rnipp_agrippa_rescoring_model:
+    input: 
+      dataset: rnipp_agrippa
+      chunked: False 
+      select:
+        query:
+          constant_score: 
+            filter:
+              exists:
+                field:
+                  validation_done
+    steps:
+      - build_model:
+          model:
+            name: rnipp_agrippa_ml
+            method: RandomForestRegressor
+            parameters:
+              n_estimators: 20
+              max_depth: 4
+              min_samples_leaf: 5
+            tries: 3
+            test_size: 0.33
+          numerical: .*(hit_score_.*|population|matchid_hit_freq)$
+          #categorical: .*(matchid_location_countrycode)$
+          target: validation_decision
+      - keep:
+          select: (matchid_id|matchid_hit_score|matchid_hit_score_ml|validation_decision|.*diff.*)$
+      - eval:
+          - correct_ml: |
+              if (matchid_hit_score_ml > 50):
+                if validation_decision:
+                  cell = True
+                else:
+                  cell = False
+              else:
+                if validation_decision:
+                  cell = False
+                else:
+                  cell = True
+

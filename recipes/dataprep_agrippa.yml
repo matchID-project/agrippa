@@ -1,0 +1,44 @@
+recipes:
+####################################
+#  dataprepartion steps for RNIPP  #
+#################################### 
+  dataprep_agrippa:
+    input: agrippa_src
+    output:
+      dataset: agrippa
+      append: False
+    threads: 4
+    steps:
+      - eval:
+        #tag dataset and records with uniq id
+          - matchid_src: str("AGRIPPA")
+          - matchid_id_validity : True if (cdet_i_supp=="0") else False
+          - matchid_tag: "201707"
+      - map:
+          #date
+          matchid_id: cdet_c_num
+          matchid_date_birth_src: pphy_d_nais
+          #name
+          matchid_name_last_src: 
+            - pphy_l_nom
+            - pphy_l_nom_jf
+          matchid_name_first_src: pphy_l_pren
+          #sex
+          matchid_sex_src: pphy_c_civil    
+      - agrippa_ref_location:
+      - keep:
+          select: matchid_.*
+          where: matchid_id!="" #removes invalid rows
+      #name
+      - french_name_normalize:
+      - french_name_frequency:
+
+      #location
+      - country_label:
+      - french_citycode:
+      - algeria_city:
+      #date
+      - d/m/y_date: # date
+      #sex
+      - eval:
+          - matchid_sex: str('') if (matchid_sex_src=='') else "1" if (matchid_sex_src=='M') else "2"

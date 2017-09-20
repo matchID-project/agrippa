@@ -1,0 +1,29 @@
+recipes:
+  rnipp_agrippa_dedup:
+SELECT *,
+    COUNT(*) OVER (PARTITION BY "matchid_id") AS "matchid_id_hit_count_final"
+--    MIN("DCD_SNPC_SCORE") OVER (PARTITION BY "DCD_ID" ORDER BY "DCD_SNPC_SCORE" DESC) AS "DCD_SNPC_SCORE_min",
+--    MAX("DCD_SNPC_SCORE") OVER (PARTITION BY "DCD_ID" ORDER BY "DCD_SNPC_SCORE" DESC) AS "DCD_SNPC_SCORE_max"
+  FROM ( -- pour chaque hit, réduit le nombre de dossiers potentiels (le meilleur ou score > 0.4)
+    SELECT 
+        *,
+        COUNT(*) OVER (PARTITION BY "matchid_id") AS "matchid_id_hit_count_full",
+        DENSE_RANK() OVER (PARTITION BY "matchid_id" ORDER BY "matchid_hit_score" DESC) AS "matchid_hit_rank"      
+      FROM ( -- sélection du meilleur DCD candidat pour chaque dossier DOSC
+        SELECT 
+            *,
+            COUNT(*) OVER (PARTITION BY "hit_matchid_id") AS "hit_matchid_id_hit_count_full",
+            DENSE_RANK() OVER (PARTITION BY "hit_matchid_id" ORDER BY "matchid_hit_score" DESC) AS "hit_matchid_hit_rank"
+          FROM (--- patch : évite les doublons DCD_ID x DOSC_IDENT p.ex si double run
+              select 
+                    *,
+                    RANK() OVER (PARTITION BY "matchid_id", "hit_matchid_id" ORDER BY "hit_score" ASC) AS "hit_matchid_hit_rank_es"
+                from
+                    "agrippaxdcdmatch_scored_unfiltered"
+               ) "a"
+          where matchid_hit_score > 0.1 AND hit_matchid_hit_rank_es = 1
+          ) "matchid_rank"
+      where "hit_matchid_hit_rank" = 1
+    ) "unfiltered_query" 
+ WHERE ("matchid_hit_rank" = 1 OR "matchid_hit_score" > 0.3) -- Option Initiale - attention 0.3 vs 0.4 = bruit
+

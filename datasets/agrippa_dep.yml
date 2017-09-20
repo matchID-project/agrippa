@@ -1,0 +1,20 @@
+datasets:
+  agrippa_dep:
+    connector: upload
+    table: dept.txt.gz
+    encoding: latin-1
+    type: read_fwf
+    skiprows: 3
+    widths:
+      - 11
+      - 11
+      - 4
+      - 41
+      - 11
+    names:
+      - dept_id
+      - regn_id
+      - dept_c_dept
+      - dept_l_nom
+      - dept_d_deb_vali
+      - dept_d_fin_vali

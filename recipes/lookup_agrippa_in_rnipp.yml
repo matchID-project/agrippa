@@ -1,0 +1,14 @@
+recipes:
+  #the full monty
+  lookup_agrippa_in_rnipp:
+    input: agrippa_src
+    output:
+      dataset: rnipp_agrippa
+      append: False
+    steps:
+      - dataprep_agrippa:
+      - rnipp_matching:
+      #- rnipp_agrippa_rescoring:
+      - diff:
+      #- keep:
+      #   select: .*(diff.*|confiance|.*matchid_id|.*score_ml|.*score|matchid_hit_distance)$

@@ -1,0 +1,5 @@
+datasets:
+  rnipp_agrippa:
+    connector: elasticsearch
+    table: rnipp_agrippa
+    validation: True
