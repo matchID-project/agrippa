@@ -2,9 +2,7 @@ recipes:
   #the full monty
   lookup_agrippa_in_rnipp:
     input: agrippa_src
-    output:
-      dataset: rnipp_agrippa
-      append: False
+    output: rnipp_agrippa
     steps:
       - dataprep_agrippa:
       - rnipp_matching:

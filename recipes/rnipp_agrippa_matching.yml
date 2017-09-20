@@ -1,9 +1,7 @@
 recipes:
   rnipp_agrippa_matching:
     input: rnipp
-    output: 
-      dataset: rnipp_agrippa
-      append: False
+    output: rnipp_agrippa
     steps:
       - join: 
           type: elasticsearch

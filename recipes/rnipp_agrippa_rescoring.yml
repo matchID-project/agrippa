@@ -3,7 +3,7 @@ recipes:
     input: rnipp_agrippa_ml
     output: 
       dataset: rnipp_agrippa_ml
-      append: True
+      mode: update
     steps:
       - apply_model:
           name: rnipp_agrippa_ml

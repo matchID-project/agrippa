@@ -14,7 +14,7 @@ recipes:
                   validation_decision
     output: 
       dataset: rnipp_agrippa
-      append: True
+      mode: update
     steps:
       - keep:
           select: validation.*|.*matchid_id
