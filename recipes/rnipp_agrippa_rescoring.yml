@@ -1,8 +1,8 @@
 recipes:
   rnipp_agrippa_rescoring:
-    input: rnipp_agrippa_ml
+    input: rnipp_agrippa
     output: 
-      dataset: rnipp_agrippa_ml
+      dataset: rnipp_agrippa
       mode: update
     steps:
       - apply_model:
@@ -10,8 +10,16 @@ recipes:
           numerical: .*(hit_score_(location|name|date|sex).*|population|matchid_hit_freq)$
           target: matchid_hit_score_ml
       - eval:
-          - confiance: 0.7*matchid_hit_score_ml+30*matchid_hit_score
-      - keep:
-          select: .*
-          where: confiance > 10
+          - confiance: >
+              try:
+                cell = round(0.7*float(matchid_hit_score_ml)+30*float(matchid_hit_score))
+              except:
+                try:
+                  cell = matchid_hit_score_ml
+                except:
+                  cell = matchid_hit_score
+          - matchid_rescoring_version: str(datetime.datetime.now())
+      #- keep:
+      #    select: .*
+      #    where: confiance > 10
  

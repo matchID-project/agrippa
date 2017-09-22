@@ -25,7 +25,7 @@ recipes:
           #categorical: .*(matchid_location_countrycode)$
           target: validation_decision
       - keep:
-          select: (matchid_id|matchid_hit_score|matchid_hit_score_ml|validation_decision|.*diff.*)$
+          select: (matchid_id|matchid_hit_score|matchid_hit_score_ml|validation_decision|.*diff.*|confiance)$
       - eval:
           - correct_ml: |
               if (matchid_hit_score_ml > 50):
