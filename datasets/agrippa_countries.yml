@@ -3,7 +3,7 @@ datasets:
     connector: upload
     table: pays.txt.gz
     encoding: latin-1
-    type: read_fwf
+    type: fwf
     skiprows: 3
     widths:
       - 11

@@ -4,7 +4,7 @@ datasets:
     table: cdet.txt.gz
     encoding: latin-1
     skiprows: 3
-    type: read_fwf
+    type: fwf
     widths:
       - 11
       - 31
