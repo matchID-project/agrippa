@@ -6,11 +6,10 @@ recipes:
     steps:
       - dataprep_agrippa:
       - rnipp_matching:
-      - rename:
-          hit_matchid_hit_number: total
-      - rnipp_agrippa_rescoring:
-      - diff:
       - keep:
           select: .*
-          where: confiance > 15
+          where: ((hit_matchid_hit_number < 10) & (confiance > 15)) | (confiance > 30)
+      # - rnipp_agrippa_rescoring:
+      - diff:
+
       
