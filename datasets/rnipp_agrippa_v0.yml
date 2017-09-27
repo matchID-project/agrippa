@@ -1,6 +1,0 @@
-datasets:
-  rnipp_agrippa_v0: #previous version of match if versionning
-    connector: elasticsearch
-    table: rnipp_agrippa_v0
-    doc_type: rnipp_agrippa
-    validation: True
