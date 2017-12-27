@@ -18,46 +18,8 @@
 - Détenteur non décédé, arme autorisée : 347898
 - Détenteur décédé, arme plus autorisée : 3
 - Détenteur décédé, arme toujours autorisée : 5460
-- **Problème données ou de terrain ?** Détenteur décédé, arme réautorisée : 4
+- **Problème données ou de terrain ?** Détenteur décédé, arme réautorisée : 331590
 
-
-----
-
-# Visualisations
-
-Outre les visualisations suivantes, des visualisations disponibles sous Tableau fournissent des statistiques générales sur le nombre d'armes enregistrées (déclarées ou autorisées) : 
-- par catégorie d'arme, total
-- par catégorie d'arme, par détenteur / état-civil
-- par type de matériel, total
-- par type de matériel, par détenteur / état-civil
-- par âge, total
-- par âge, par détenteur / état-civil
-- par département, total
-- par département, par détenteur / état-civil
-
-### Décompte des autorisations
-
-![Autorisations par catégorie](./Autorisations - Par catégorie.png)
-
-![Autorisations par matériel](./Autorisations - Par type de matériel.png)
-
-![Autorisations par âge](./Autorisations - Par âge.png)
-
-![Autorisations par département](./Autorisations - Par département.png)
-
-### Décompte des déclarations
-
-![Déclarations par catégorie](./Déclarations - Par catégorie.png)
-
-![Déclarations par matériel](./Déclarations - Par type de materiel.png)
-
-![Déclarations par âge](./Déclarations - Par âge.png)
-
-![Déclarations par département](./Déclarations - Par département.png)
-
-### Décompte des autorisations actives
-
-![Flux d'autorisations](./Flux d'autorisations.png)
 
 ----
 
@@ -141,7 +103,7 @@ La principale cause de collisions d'identité qui demeure (i.e. d'un taux de pr�
 
 La situation la plus courante est celle d'enregistrements ayant exactement les mêmes nom de famille, prénom (éventuellement 2e et 3e prénom), et date de naissance, sans indication de lieu de naissance. Deux cas sont alors possibles : soit tous ces enregistrements ont le même lieu de naissance (on les nomme alors "jumeaux parfaits"), soit ils possèdent k lieux de naissance, k>=2 (on parle alors de "k-jumeaux imparfaits").
 
-* Estimation 1 (empirique) :
+* Méthode empirique d'estimation :
 
 Une première estimation du taux de jumeaux imparfaits est donnée par un décompte sur un jeu de données suffisamment fiable, par exemple sur le SNPC (nombre d'enregistrements total 49814656) :
 
@@ -166,7 +128,7 @@ Une première estimation du taux de jumeaux imparfaits est donnée par un décom
 
 De ces deux histogrammes, on conclut que les k-jumeaux pour k>2 sont négligeables par rapport aux 2-jumeaux, et que la proportion de jumeaux imparfaits vs. parfaits, une approximation du taux de collisions en cas d'ambiguïté sur le lieu de naissance est de 2,22% - et surtout que le nombre d'erreurs d'identification dues aux erreurs de saisie de lieu de naissance est au pire de 6 pour 10000.
 
-* Estimation 2 (probabiliste) :
+* Méthode probabiliste d'estimation :
 
 Afin de valider cette estimation empirique, on peut calculer un ordre de grandeur de façon probabiliste et non plus statistique. Ainsi on estime le nombre de collisions de ce type à partir de la probabilité d'une collision sur l'état-civil moins le lieu de naissance :
 
@@ -177,15 +139,17 @@ et le nombre moyen de collisions sur la date de naissance est de :
 
 Noter également que l'algorithme MatchID ne ŕéconcilie ces enregistrements (ce qui conduit à fusionner les cliques correspondantes) que si les combinaisons prénom/nom sont suffisamment rares, donc la probabilité réelle de collisions est encore plus faible.
 
-### Analyse des causes de doublons/collisions
+### Causes de doublons/collisions
 
-À noter différentes causes de collisions ou de doublons sur les identités. Ces enregistrements de mauvaise qualité induisent en général peu de biais sur ĺes statistiques concernant l'ensemble des 2388663 détenteurs mais peuvent induire des biais non négligeables sur les statistiques par détenteur. (Ils sont de toute façon filtrés dans toutes les analyses décrites ici, même celles agrégées sur l'ensemble des données.) 
+Il existe différentes causes liées à la qualité des données pour expliquer collisions et doublons sur les identités. Ces enregistrements de mauvaise qualité induisent en général peu d'erreurs sur ĺes statistiques concernant l'ensemble des 2388663 détenteurs mais peuvent induire des erreurs non négligeables sur les statistiques par détenteur. (Ils sont de toute façon filtrés dans toutes les analyses décrites ici, même celles agrégées sur l'ensemble des données.) 
 
-|Cause du biais|Volume|
+|Cause de doublons/collisions|Volume|
 |---|---|
 |Détenteurs sans lieu de naissance|362825|
 |Enregistrements avec un patronyme "INCONNU"|4269|
 |Détenteurs sans date de naissance|2735|
+
+Noter enfin que les causes intrinsèques de collisions sont négligeables par rapport à ces problèmes de qualité : par exemple la probabilité d'un jumeau parfait - comme décrit plus haut - est inférieure de plusieurs ordres de grandeur à celle de jumeaux imparfaits dûs à l'absence de lieu de naissance dans la base de données.
 
 ----
 
@@ -194,22 +158,35 @@ Noter également que l'algorithme MatchID ne ŕéconcilie ces enregistrements (c
 Cette section contient surtout des questions à destination des experts métier afin de clarifier notre (côté MGMSIC) compréhension du modèle de données, et donc de déterminer si certains observations correspondent à des anomalies réelles ou pas.
 
 ### Dates de début et fin d'autorisation
+
 Un grand nombre d'autorisation n´ont pas de date de fin (champ `AUTO_D_FIN_date`).
 
 ### Catégorie manquante
+
 On observe 27% des armes sans catégorie (`CEUR_C_CLAS_EURO`), est-ce normal ?
 
 ### Déclaration nécessaire à autorisation
+
 Est-ce le cas pour toutes les catégories A-D, ou uniquement pour les armes nécessitant une autorisation (catégorie B et éventuellement A) ?
 
 ### Durée de déclaration et d'autorisation
+
 La durée standard est de 3 ans, passée à 5 ans, quelle est la date exacte du changement de réglementation ? certains détails réglementaires ou législatifs expliquent-ils les durées observées différentes de ces deux valeurs ?
 
 ### Définition over quota
+
 Est-ce toujours un maximum de 12 armes autorisées pour un même individu, ou faut-il prendre en compte les catégories spéciales impliquant un quota plus bas (10) ?
 
 ### Statut des dossiers
+
 Pour un dossier donné (`DOSS_ID`) on peut avoir plusieurs demandes de déclaration / autorisation / carte européenne, avec un statut donné par `ETAD_L_LIB`, faut-il prendre en compte les valeurs autres que "Valide" pour ce statut ? (Pour l'instant toutes les mesures agrégées sont filtrées sur la validité des déclarations ou autorisations correspondantes, ce qui résoud les problèmes d'armes "multi-actives".)
+
+### Détenteurs décédés
+
+Un grand nombre d'incohérences entre date de déclaration de décès et date effective de décès, qui introduisent des erreurs statistiques et particulièrement sur les données les plus sensibles en matière de détention d'armes :
+
+- Rien qu'en se limitant aux détenteurs d'armes avec autorisation valide, on a 70028 incohérences entre les jours de décès et 3710 incohérences entre les années de décès
+- Pour les détenteurs d'armes avec déclaration, on a 307287 incohérences entre les jours de décès et 15159 incohérences entre les années de décès
 
 ----
 
@@ -217,14 +194,66 @@ Pour un dossier donné (`DOSS_ID`) on peut avoir plusieurs demandes de déclarat
 
 ### Total armes à autorisation active + Total armes à déclaration
 
+D'après [Wikipedia](https://fr.wikipedia.org/wiki/Contr%C3%B4le_des_armes_%C3%A0_feu_en_France) :
+
 	En 2009, la France compterait légalement 762 331 armes soumises à autorisation (actuelle catégorie B), et 2 039 726 armes soumises à déclaration
 
-Avec notre analyse des données Agrippa, on obtient des volumes inférieurs à ces valeurs :
+Avec notre analyse des données Agrippa, on obtient les volumes suivants pour les armes autorisées :
 
-|Cause du biais|Volume|
+|Définition|Volume|
 |---|---|
 |Armes de catégorie B ayant une autorisation active en 2017|55875|
 |Armes de catégorie B ayant une autorisation active au 01/01/2009|24633|
 |Cumul historique en 2017|171795|
 |Cumul historique au 01/01/2009|49846|
-|Cumul historique (incluant les autorisations non datées !)|668634|
+|Cumul historique d'autorisations valides|668634|
+|Cumul historique (incluant les autorisations non datées)|937633|
+|Nombre d'autorisations datées avant le 01/01/2009|553168|
+
+Étant donné que 331590 armes ont une autorisation valide *et non datée*, en extrapolant le taux de données manquantes sur ces champs dates au volume d'autorisations global, on obtient une estimation du nombre d'armes autorisées en 2009 de 748793, proche des 762331 annoncées.
+
+Quant aux déclarations, comme elles ne nécessitent pas de date de début et de fin contrairement aux autorisations, il est plus difficile d'estimer leur nombre en 2009 à partir des données actuelles, non historicisées. Le nombre d'armes déclarées valides en 2017 est 3138840, donc d'un ordre de grandeur correct face aux 2039726 annoncées en 2009, sans pouvoir vérifier plus précisément ce chiffre.
+
+----
+
+# Visualisations
+
+Outre les visualisations suivantes, des visualisations disponibles sous Tableau fournissent des statistiques générales sur le nombre d'armes enregistrées (déclarées ou autorisées) : 
+- par catégorie d'arme, total
+- par catégorie d'arme, par détenteur / état-civil
+- par type de matériel, total
+- par type de matériel, par détenteur / état-civil
+- par âge, total
+- par âge, par détenteur / état-civil
+- par département, total
+- par département, par détenteur / état-civil
+
+### Décompte des autorisations
+
+![Autorisations par catégorie](./Autorisations - Par catégorie.png)
+
+![Autorisations par matériel](./Autorisations - Par type de matériel.png)
+
+![Autorisations par âge](./Autorisations - Par âge.png)
+
+![Autorisations par département](./Autorisations - Par département.png)
+
+### Décompte des déclarations
+
+![Déclarations par catégorie](./Déclarations - Par catégorie.png)
+
+![Déclarations par matériel](./Déclarations - Par type de materiel.png)
+
+![Déclarations par âge](./Déclarations - Par âge.png)
+
+![Déclarations par département](./Déclarations - Par département.png)
+
+### Décompte des autorisations actives
+
+![Flux d'autorisations](./Flux d'autorisations.png)
+
+### Identification des détenteurs 
+
+![Sources de rapprochement d'identités par MatchID](./Sources de rapprochement.png)
+
+![Scores de rapprochement d'identités par MatchID](./Scores de rapprochement.png)
