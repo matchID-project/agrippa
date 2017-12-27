@@ -1,5 +1,7 @@
 # *Analyse initiale des données AGRIPPA*
 
+----
+
 # Statistiques générales
 
 ### Décompte des entités
@@ -23,13 +25,18 @@
 
 # Visualisations
 
-Voir visualisations Tableau ci-jointes (au format PDF) indiquant le nombre d'armes enregistrées : 
+Les visualisations suivantes indiquant le nombre d'armes enregistrées : 
 - par catégorie d'arme, total
 - par catégorie d'arme, par détenteur / état-civil
 - par département, total
 - par département, par détenteur / état-civil
 - par âge, total
 - par âge, par détenteur / état-civil
+
+
+![Autorisations par catégorie](./Autorisations - Par catégorie.png)
+![Autorisations par matériel](./Autorisations - Par type de matériel.png)
+![Autorisations par âge](./Autorisations - Par âge.png )
 
 ----
 
