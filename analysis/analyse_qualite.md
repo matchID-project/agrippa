@@ -1,7 +1,5 @@
 # *Analyse initiale des données AGRIPPA*
 
-----
-
 # Statistiques générales
 
 ### Décompte des entités
@@ -72,6 +70,8 @@ Qualitativement, la comparaison des clusters complets vs. incomplets, ainsi que 
 
 _Clusters incomplets vs. complets_
 
+|Type de clusters|Nombre de tels clusters|
+|---|---|
 |Détenteurs dans clusters complets (appelés cliques) | 975763|
 |Détenteurs dans clusters incomplets | 103445|
 
@@ -165,18 +165,63 @@ Noter également que l'algorithme MatchID ne ŕéconcilie ces enregistrements (c
 
 Cette section contient surtout des questions à destination des experts métier afin de clarifier notre (côté MGMSIC) compréhension du modèle de données, et donc de déterminer si certains observations correspondent à des anomalies réelles ou pas.
 
-- _Dates de début et fin d'autorisation_ : Un grand nombre d'autorisation n´ont pas de date de fin (champ `AUTO_D_FIN_date`).
-- _Catégorie manquante_ : On observe 27% des armes sans catégorie (`CEUR_C_CLAS_EURO`), est-ce normal ?
-- _Déclaration nécessaire à autorisation_ : Est-ce le cas pour toutes les catégories A-D, ou uniquement pour les armes nécessitant une autorisation (catégorie B et éventuellement A) ?
-- _Durée de déclaration et d'autorisation_ : La durée standard est de 3 ans, passée à 5 ans, quelle est la date exacte du changement de réglementation ? certains détails réglementaires ou législatifs expliquent-ils les durées observées différentes de ces deux valeurs ?
-- _Définition over quota_ : Est-ce toujours un maximum de 12 armes autorisées pour un même individu, ou faut-il prendre en compte les catégories spéciales impliquant un quota plus bas (10) ?
-- _Statut des dossiers_ : Pour un dossier donné (`DOSS_ID`) on peut avoir plusieurs demandes de déclaration / autorisation / carte européenne, avec un statut donné par `ETAD_L_LIB`, faut-il prendre en compte les valeurs autres que "Valide" pour ce statut ? (Pour l'instant toutes les mesures agrégées sont filtrées sur la validité des déclarations ou autorisations correspondantes, ce qui résoud les problèmes d'armes "multi-actives".)
+### Dates de début et fin d'autorisation
+Un grand nombre d'autorisation n´ont pas de date de fin (champ `AUTO_D_FIN_date`).
+
+### Catégorie manquante
+On observe 27% des armes sans catégorie (`CEUR_C_CLAS_EURO`), est-ce normal ?
+
+### Déclaration nécessaire à autorisation
+Est-ce le cas pour toutes les catégories A-D, ou uniquement pour les armes nécessitant une autorisation (catégorie B et éventuellement A) ?
+
+### Durée de déclaration et d'autorisation
+La durée standard est de 3 ans, passée à 5 ans, quelle est la date exacte du changement de réglementation ? certains détails réglementaires ou législatifs expliquent-ils les durées observées différentes de ces deux valeurs ?
+
+### Définition over quota
+Est-ce toujours un maximum de 12 armes autorisées pour un même individu, ou faut-il prendre en compte les catégories spéciales impliquant un quota plus bas (10) ?
+
+### Statut des dossiers
+Pour un dossier donné (`DOSS_ID`) on peut avoir plusieurs demandes de déclaration / autorisation / carte européenne, avec un statut donné par `ETAD_L_LIB`, faut-il prendre en compte les valeurs autres que "Valide" pour ce statut ? (Pour l'instant toutes les mesures agrégées sont filtrées sur la validité des déclarations ou autorisations correspondantes, ce qui résoud les problèmes d'armes "multi-actives".)
 
 ----
 
 # Reproduction des statistiques publiques
 
 ### Total armes à autorisation active + Total armes à déclaration
+
+	En 2009, la France compterait légalement 762 331 armes soumises à autorisation (actuelle catégorie B), et 2 039 726 armes soumises à déclaration
+
+Avec notre analyse des données Agrippa, on obtient des volumes inférieurs à ces valeurs :
+
+|Cause du biais|Volume|
+|---|---|
+|Armes de catégorie B ayant une autorisation active en 2017|55875|
+|Armes de catégorie B ayant une autorisation active au 01/01/2009|24633|
+|Cumul historique en 2017|171795|
+|Cumul historique au 01/01/2009|49846|
+|Cumul historique (incluant les autorisations non datées !)|668634|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----
+
+# TODO
+
+### Reproduction des statistiques publiques : Total armes à autorisation active + Total armes à déclaration
 
 	En 2009, la France compterait légalement 762 331 armes soumises à autorisation (actuelle catégorie B), et 2 039 726 armes soumises à déclaration
 
@@ -189,3 +234,7 @@ Armes de catégorie B ayant une autorisation active au 01/01/2009|24633
 Cumul historique en 2017|171795
 Cumul historique au 01/01/2009|49846
 Cumul historique (incluant les autorisations non datées !)|668634
+
+### Total détenteurs + détenteurs.décédés
+
+	De mémoire on avait plus de 150k décédés dans l'ensemble des détenteurs. Du coup, il doit y avoir le passif, et très certainement les armes soumises à déclaration : sur ce dernier point le volume serait intéressant.
