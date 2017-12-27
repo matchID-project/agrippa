@@ -105,7 +105,9 @@ La situation la plus courante est celle d'enregistrements ayant exactement les m
 
 * Méthode empirique d'estimation :
 
-Une première estimation du taux de jumeaux imparfaits est donnée par un décompte sur un jeu de données suffisamment fiable, par exemple sur le SNPC (nombre d'enregistrements total 49814656) :
+Une première estimation du taux de jumeaux imparfaits est donnée par un décompte sur un jeu de données suffisamment fiable, ce que nous faisons ici sur deux exemples
+
+Sur le SNPC (nombre d'identités total 49814656) :
 
 |k|Nombre de k-jumeaux imparfaits|
 |---|---|
@@ -127,6 +129,25 @@ Une première estimation du taux de jumeaux imparfaits est donnée par un décom
 |36|1|
 
 De ces deux histogrammes, on conclut que les k-jumeaux pour k>2 sont négligeables par rapport aux 2-jumeaux, et que la proportion de jumeaux imparfaits vs. parfaits, une approximation du taux de collisions en cas d'ambiguïté sur le lieu de naissance est de 2,22% - et surtout que le nombre d'erreurs d'identification dues aux erreurs de saisie de lieu de naissance est au pire de 6 pour 10000.
+
+Même analyse sur le RNIPP (nombre d'identités total 23126717) :
+
+|k|Nombre de k-jumeaux imparfaits|
+|---|---|
+|2|7379|
+|3|48|
+|4|1|
+|5|1|
+|6|1|
+
+|k|Nombre de k-jumeaux parfaits|
+|---|---|
+|2|101532|
+|3|1230|
+|4|15|
+|5|2|
+
+Le constat est le même que pour le SNPC, avec une proportion de jumeaux imparfaits vs. parfaits de 7,26% et un nombre d'erreurs d'identification dues aux erreurs de saisie de lieu de naissance encore plus faible : au pire de 3 pour 10000.
 
 * Méthode probabiliste d'estimation :
 
