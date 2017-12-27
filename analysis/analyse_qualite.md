@@ -25,7 +25,7 @@
 
 # Visualisations
 
-Les visualisations suivantes indiquant le nombre d'armes enregistrées : 
+Outre les visualisations suivantes, des visualisations disponibles sous Tableau fournissent des statistiques générales sur le nombre d'armes enregistrées (déclarées ou autorisées) : 
 - par catégorie d'arme, total
 - par catégorie d'arme, par détenteur / état-civil
 - par département, total
@@ -33,10 +33,25 @@ Les visualisations suivantes indiquant le nombre d'armes enregistrées :
 - par âge, total
 - par âge, par détenteur / état-civil
 
+### Décompte des autorisations
 
 ![Autorisations par catégorie](./Autorisations - Par catégorie.png)
+
 ![Autorisations par matériel](./Autorisations - Par type de matériel.png)
-![Autorisations par âge](./Autorisations - Par âge.png )
+
+![Autorisations par âge](./Autorisations - Par âge.png)
+
+### Décompte des déclarations
+
+![Déclarations par catégorie](./Déclarations - Par catégorie.png)
+
+![Déclarations par matériel](./Déclarations - Par type de matériel.png)
+
+![Déclarations par âge](./Déclarations - Par âge.png)
+
+### Décompte des autorisations actives
+
+![Flux d'autorisations](./Flux d'autorisations.png)
 
 ----
 
