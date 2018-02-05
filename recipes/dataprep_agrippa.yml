@@ -4,9 +4,7 @@ recipes:
 #################################### 
   dataprep_agrippa:
     input: agrippa_src
-    output:
-      dataset: agrippa
-      append: False
+    output: agrippa
     threads: 4
     steps:
       - eval:

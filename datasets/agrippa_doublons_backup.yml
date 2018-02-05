@@ -1,0 +1,6 @@
+datasets:
+  agrippa_doublons_backup:
+    connector: upload
+    table: agrippa_doublons_backup.msgpack
+    type: msgpack
+    encoding: utf8

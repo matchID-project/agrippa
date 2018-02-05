@@ -1,0 +1,6 @@
+datasets:
+  agrippa_backup:
+    connector: upload
+    table: agrippa_backup.msgpack
+    type: msgpack
+    chunk: 10000

@@ -1,0 +1,12 @@
+recipes:
+  agrippa_backup:
+    supervisor_interval: 10
+    write_queue_length: 10
+    input: 
+      dataset: agrippa_backup
+      chunk: 10000
+    output: 
+      dataset: agrippa
+      thread_count: 5
+      max_tries: 5
+    steps:

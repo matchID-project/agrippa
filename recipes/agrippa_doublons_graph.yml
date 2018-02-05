@@ -1,0 +1,32 @@
+recipes:
+  agrippa_doublons_graph:
+    test_chunk_size: 10000
+    input: 
+      dataset: agrippa_doublons_backup
+      chunked: False
+      chunk: 10000
+      filter:
+        keep:
+          select: ^(.*matchid_id|_id|confiance)$
+          where: confiance > 30
+    output: 
+      dataset: agrippa_doublons
+      mode: update
+    steps:
+      - clique:
+          select:
+            - matchid_id
+            - hit_matchid_id
+          prefix: matchid_graph_
+      - groupby:
+          select: matchid_graph_clique_id
+          transform:
+            - confiance: sum
+      - eval:
+          - matchid_graph_clique_coherence: round(confiance_sum/(max(1,matchid_graph_clique_size-1)))
+      - delete:
+          select: 
+            - confiance_sum
+            - confiance
+            - matchid_id
+            - hit_matchid_id
