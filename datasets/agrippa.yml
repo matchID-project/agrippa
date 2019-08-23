@@ -8,6 +8,7 @@ datasets:
         #index.store.type: mmapfs
         index.refresh_interval: 30s
         index.number_of_replicas: 0
+        index.number_of_shards: 20
       mappings:
         agrippa:
           _all:

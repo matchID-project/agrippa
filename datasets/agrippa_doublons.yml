@@ -3,6 +3,12 @@ datasets:
     connector: elasticsearch
     table: agrippa_doublons
     chunk: 1000
+    body: 
+      settings:
+        #index.store.type: mmapfs
+        index.refresh_interval: 30s
+        index.number_of_replicas: 2 
+        index.number_of_shards: 5    
     validation: 
       actions:
         display: true

@@ -1,8 +1,8 @@
 recipes:
   agrippa_doublons_backup:
     supervisor_interval: 20
-    test_chunk_size: 1000
-    write_queue_length: 10
+    test_chunk_size: 100
+    write_queue_length: 20
     input:     
       dataset: agrippa_doublons_backup
       chunk: 10000
@@ -13,6 +13,7 @@ recipes:
     output: 
       dataset: agrippa_doublons
       chunk: 500
-      thread_count: 5
-      max_tries: 5
+      timeout: 30
+      thread_count: 1
+      max_tries: 4
     steps:

@@ -2,7 +2,7 @@ recipes:
   agrippa_doublons_graph_backup:
     supervisor_interval: 20
     test_chunk_size: 1000
-    write_queue_length: 10
+    write_queue_length: 20
     input:     
       dataset: agrippa_doublons_graph_backup
       chunk: 10000
@@ -14,6 +14,6 @@ recipes:
       dataset: agrippa_doublons
       chunk: 500
       mode: update
-      thread_count: 5
+      thread_count: 10
       max_tries: 5
     steps:

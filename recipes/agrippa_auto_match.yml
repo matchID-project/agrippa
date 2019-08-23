@@ -1,8 +1,17 @@
 recipes:
   agrippa_auto_match:
-    input: agrippa
+    input: agrippa_backup
     output: agrippa_doublons_backup
+    test_chunk_size: 15
+    threads: 30
     steps:
+      #- keep:
+      #    select: .*
+      #    where: (pphy_l_nom != "INCONNU") | (pphy_l_pren != "INCONNU")
+      #- dataprep_agrippa:
+      - keep:
+          select: .*
+          where : matchid_name_match != "inconnu"
       - join: 
           type: elasticsearch
           dataset: agrippa
