@@ -1,0 +1,40 @@
+recipes:
+  agrippa_to_csv:
+    input: agrippa_src
+    output: agrippa_csv
+    threads: 4
+    steps:
+      - keep:
+        #tag dataset and records with uniq id
+          select: .*
+          where: (cdet_i_supp=="0") & (cdet_id != "")
+      - agrippa_ref_location:
+      - map:
+          #date
+          date_naissance: pphy_d_nais
+          #name
+          prenom: pphy_l_pren
+          #sex
+          sexe: pphy_c_civil 
+          commune: matchid_location_city_src 
+          code_commune: matchid_location_citycode
+          departement: matchid_location_depcode_src
+          pays: matchid_location_country_src
+      - replace:
+          select: sexe
+          regex:
+            - Mme: F
+      - replace:
+          select: departement
+          regex:
+            - ^0(..)$: \1
+      - replace:
+          select: .*
+          regex:
+            - ^.*connu.*$: ''
+      - exec:
+          - df['nom']=np.where(df['pphy_l_nom_jf']!="",df['pphy_l_nom_jf'],df['pphy_l_nom'])
+      - keep:
+          select: nom|prenom|date_naissance|commune|departement|pays
+          
+

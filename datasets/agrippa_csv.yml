@@ -1,0 +1,7 @@
+datasets:
+  agrippa_csv:
+    connector: upload
+    table: agrippa.csv
+    type: csv
+    sep: ";"
+    encoding: "utf8"
